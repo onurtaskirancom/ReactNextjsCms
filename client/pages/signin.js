@@ -21,15 +21,20 @@ function Signin() {
     try {
       setLoading(true);
       const { data } = await axios.post("/signin", values);
-      // console.log("signin response => ", data);
-      // save user and token to context
-      setAuth(data);
-      // save user and token to local storage
-      localStorage.setItem("auth", JSON.stringify(data));
-      toast.success("Successfully signed in");
-      // redirect user
-      router.push("/");
-      // form.resetFields();
+      if (data?.error) {
+        toast.error(data.error);
+        setLoading(false);
+      } else {
+        // console.log("signin response => ", data);
+        // save user and token to context
+        setAuth(data);
+        // save user and token to local storage
+        localStorage.setItem("auth", JSON.stringify(data));
+        toast.success("Successfully signed in");
+        // redirect user
+        router.push("/");
+        // form.resetFields();
+      }
     } catch (err) {
       console.log("err => ", err);
       setLoading(false);
