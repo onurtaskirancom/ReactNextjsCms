@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Layout } from "antd";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { Form, Input, Row, Col, Button, List } from "antd";
@@ -6,18 +6,24 @@ import { EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import CategoryUpdateModal from "../../../components/modal/CategoryUpdateModal";
+import { PostContext } from "../../..//context/post";
 
 const { Content, Sider } = Layout;
 
 function Categories() {
+  // context
+  const [post, setPost] = useContext(PostContext);
+
   // state
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+
   // update state
   const [updatingCategory, setUpdatingCategory] = useState({});
   const [visible, setVisible] = useState(false);
   // hooks
   const [form] = Form.useForm();
+
+  const { categories } = post;
 
   useEffect(() => {
     getCategories();
@@ -26,7 +32,7 @@ function Categories() {
   const getCategories = async () => {
     try {
       const { data } = await axios.get("/categories");
-      setCategories(data);
+      setPost((prev) => ({ ...prev, categories: data }));
     } catch (err) {
       console.log(err);
     }
@@ -37,7 +43,7 @@ function Categories() {
     try {
       setLoading(true);
       const { data } = await axios.post("/category", values);
-      setCategories([data, ...categories]);
+      setPost((prev) => ({ ...prev, categories: [data, ...categories] }));
       // console.log(data);
       toast.success("Category created successfully");
       setLoading(false);
@@ -52,7 +58,10 @@ function Categories() {
   const handleDelete = async (item) => {
     try {
       const { data } = await axios.delete(`/category/${item.slug}`);
-      setCategories(categories.filter((cat) => cat._id !== data._id));
+      setPost(prev => ({
+        ...prev,
+        categories: categories.filter((cat) => cat._id!== data._id),
+      }));
       toast.success("Category deleted successfully");
     } catch (err) {
       console.log(err);
@@ -77,7 +86,7 @@ function Categories() {
         }
         return cat;
       });
-      setCategories(newCategories);
+      setPost((prev) => ({...prev, categories: newCategories }));
       toast.success("Categrory updated successfully");
       setVisible(false);
       setUpdatingCategory({});
@@ -124,7 +133,7 @@ function Categories() {
             )}
           ></List>
         </Col>
-                
+
         <CategoryUpdateModal
           visible={visible}
           setVisible={setVisible}
