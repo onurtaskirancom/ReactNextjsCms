@@ -89,8 +89,8 @@ const AuthorNav = () => {
 
         {/* comments */}
         <Menu.Item key="9" icon={<CommentOutlined />}>
-          <Link href="/admin/comments">
-            <a className={activeName("/admin/comments")}>Comments</a>
+          <Link href="/author/comments">
+            <a className={activeName("/author/comments")}>Comments</a>
           </Link>
         </Menu.Item>
 
