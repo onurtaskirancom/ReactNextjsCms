@@ -271,9 +271,9 @@ export const comments = async (req, res) => {
 export const userComments = async (req, res) => {
   try {
     const comments = await Comment.find({ postedBy: req.user._id })
-        .populate("postedBy", "name")
-        .populate("postId", "title slug")
-        .sort({ createdAt: -1 });
+      .populate("postedBy", "name")
+      .populate("postId", "title slug")
+      .sort({ createdAt: -1 });
 
     return res.json(comments);
   } catch (err) {
@@ -310,6 +310,19 @@ export const removeComment = async (req, res) => {
   try {
     const comment = await Comment.findByIdAndDelete(req.params.commentId);
     res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getNumbers = async (req, res) => {
+  try {
+    const posts = await Post.countDocuments();
+    const users = await User.countDocuments();
+    const comments = await Comment.countDocuments();
+    const categories = await Category.countDocuments();
+
+    return res.json({ posts, users, comments, categories });
   } catch (err) {
     console.log(err);
   }
