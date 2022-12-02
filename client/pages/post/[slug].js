@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import Editor from "rich-markdown-editor";
 import { ThemeContext } from "../../context/theme";
 import CommentForm from "../../components/comments/CommentForm";
+import { ShareSocial } from "react-share-social";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -64,6 +65,19 @@ export const SinglePost = ({ post, postComments }) => {
                 </span>
               ))}
             </p>
+
+            {/* social share */}
+            <div style={{ marginTop: "-20px", marginBottom: "15px" }}>
+              <ShareSocial
+                url={process.browser && window.location.href}
+                socialTypes={["facebook", "twitter", "reddit", "linkedin"]}
+                style={{
+                  height: "100px",
+                  overflow: "hidden",
+                  background: "none",
+                }}
+              />
+            </div>
 
             <Editor
               defaultValue={post.content}
