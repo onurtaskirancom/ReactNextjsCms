@@ -60,7 +60,7 @@ const NewUser = () => {
           <Input
             style={{ margin: "10px 0px 10px 0px" }}
             size="large"
-            placeholder="Email" 
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

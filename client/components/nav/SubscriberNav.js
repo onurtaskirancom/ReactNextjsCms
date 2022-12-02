@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Menu, Button, Layout } from "antd";
+import { Menu, Layout } from "antd";
 import Link from "next/link";
 import { useWindowWidth } from "@react-hook/window-size";
 import { AuthContext } from "../../context/auth";
 import {
-  PieChartOutlined,
-  MailOutlined,
-  PushpinOutlined,
-  CameraOutlined,
-  UserSwitchOutlined,
   SettingOutlined,
-  BgColorsOutlined,
   UserOutlined,
   CommentOutlined,
 } from "@ant-design/icons";
@@ -18,7 +12,7 @@ import {
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-const AuthorNav = () => {
+const SubscriberNav = () => {
   // context
   const [auth, setAuth] = useContext(AuthContext);
   // state
@@ -54,50 +48,24 @@ const AuthorNav = () => {
         inlineCollapsed={collapsed}
       >
         <Menu.Item key="1" icon={<SettingOutlined />}>
-          <Link href="/author">
-            <a className={activeName("/author")}>Dashboard</a>
+          <Link href="/subscriber">
+            <a className={activeName("/subscriber")}>Dashboard</a>
           </Link>
         </Menu.Item>
 
-        {/* posts */}
-        <SubMenu key="2" icon={<PushpinOutlined />} title="Posts">
-          <Menu.Item key="3">
-            <Link href="/author/posts">
-              <a className={activeName("/author/posts")}>All Posts</a>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link href="/author/posts/new">
-              <a className={activeName("/author/posts/new")}>Add New</a>
-            </Link>
-          </Menu.Item>
-        </SubMenu>
-
-        {/* library */}
-        <SubMenu key="6" icon={<CameraOutlined />} title="Media">
-          <Menu.Item key="7">
-            <Link href="/author/media/library">
-              <a className={activeName("/author/media/library")}>Library</a>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="8">
-            <Link href="/author/media/new">
-              <a className={activeName("/author/media/new")}>Add New</a>
-            </Link>
-          </Menu.Item>
-        </SubMenu>
-
         {/* comments */}
         <Menu.Item key="9" icon={<CommentOutlined />}>
-          <Link href="/admin/comments">
-            <a className={activeName("/admin/comments")}>Comments</a>
+          <Link href="/subscriber/comments">
+            <a className={activeName("/subscriber/comments")}>Comments</a>
           </Link>
         </Menu.Item>
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
-          <Link href={`/author/${auth?.user?._id}`}>
-            <a className={activeName(`/author/${auth?.user?._id}`)}>Profile</a>
+          <Link href={`/subscriber/${auth?.user?._id}`}>
+            <a className={activeName(`/subscriber/${auth?.user?._id}`)}>
+              Profile
+            </a>
           </Link>
         </Menu.Item>
       </Menu>
@@ -105,4 +73,4 @@ const AuthorNav = () => {
   );
 };
 
-export default AuthorNav;
+export default SubscriberNav;
